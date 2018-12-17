@@ -1,0 +1,113 @@
+Mercury Home 
+//a[contains(text(),'Home')]/@href
+
+
+Radio button Trip Type
+//input[@name='tripType' and @value='oneway']
+//input[@name='tripType' and @value='roundtrip']
+passengers
+//select[@name='passCount']/option[@value=1]
+Departing From
+//select[@name='fromPort']/option[contains(@value,'Frankfurt')] 
+Onmonth dropdown
+//select[@name='fromMonth']/option[@value=12]
+OnDay
+//select[@name='fromDay']/option[@value=31]
+Arriving In
+//select[@name='toPort']/option[@value='London']
+Returning ToMonth
+//select[@name='toMonth']/option[@value=1]
+Returning ToDay
+//select[@name='toDay']/option[@value=1]
+Service class--economy
+//input[@type='radio' and @name='servClass' and @value='Coach']
+Service class--Business
+//input[@type='radio' and @name='servClass' and @value='Business']
+Service class--First
+//input[@type='radio' and @name='servClass' and @value='First']
+Airline Preference
+//select[@name='airline']/option[text()='No Preference']
+//select[@name='airline']/option[text()='Blue Skies Airlines']
+//select[@name='airline']/option[text()='Unified Airlines']
+//select[@name='airline']/option[text()='Pangea Airlines']
+//Continue button
+//input[@type='image' and @name='findFlights']
+===========================================================================================================
+===========================================================================================================
+DEPART Table
+//input[@type='radio' and @name='outFlight' and starts-with(@value, 'Blue Skies Airlines$360') ]
+//input[@type='radio' and @name='outFlight' and starts-with(@value, 'Blue Skies Airlines$361') ]
+//input[@type='radio' and @name='outFlight' and starts-with(@value, 'Pangea Airlines$362') ]
+//input[@type='radio' and @name='outFlight' and starts-with(@value, 'Unified Airlines$363') ]
+
+RETURN
+//input[@type='radio' and @name='inFlight' and starts-with(@value, 'Blue Skies Airlines$630') ]
+//input[@type='radio' and @name='inFlight' and starts-with(@value, 'Blue Skies Airlines$631') ]
+//input[@type='radio' and @name='inFlight' and starts-with(@value, 'Pangea Airlines$632') ]
+//input[@type='radio' and @name='inFlight' and starts-with(@value, 'Unified Airlines$633') ]
+
+Continue Button
+//input[@name='reserveFlights']
+===========================================================================================================
+===========================================================================================================
+First name
+//input[@name='passFirst0']
+Last name
+//input[@name='passLast0']
+Meal preference
+//select[@name='pass.0.meal']/option[@value='BLML']
+Credit Card
+//select[@name='creditCard']/option[@value='AX']
+Number
+//input[@name='creditnumber']
+
+
+ADDRESS
+//input[@name='billAddress1']
+//input[@name='billAddress2']
+
+CITY
+//input[@name='billCity']
+
+STATE
+//input[@name='billState']
+
+POSTAL CODE
+//input[@name='billZip']
+ COUNTRY
+//select[@name='delCountry']/option[@value=1]
+
+SECURE PURCHASE
+//input[@name='buyFlights']
+
+
+
+
+
+
+
+
+
+
+
+
+=========================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
