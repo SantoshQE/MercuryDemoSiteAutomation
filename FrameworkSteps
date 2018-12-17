@@ -1,0 +1,12 @@
+1. Load configuration stored in Global Sheet
+2. Load TestCases sheet
+3. Check if the first test case [for ex: TC1] flag is set to Y
+4. If set to Y then take the total number of instances of TC1 from Test Data sheet, 
+	4.a set the iteration counter based on above step
+5. Note down the row numbers from which data needs to be passed for each iteration to test case
+6. Navigate further in the code to create a loop starting from Test Data sheet , counter = No.of iterations noted in 4.a
+7. Run the code further to invoke the refelction API [ Reading each keyword as pkg.classname.methodname]
+8. Run first iteration
+9. Run remaining iterations
+10. Prepare a report for total number of test cases executed as per iterations
+
