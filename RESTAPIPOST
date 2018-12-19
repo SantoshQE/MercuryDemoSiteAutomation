@@ -1,0 +1,63 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class POSTOnceAgain {
+
+	public static void main(String[] args, String jasonstringResponse) throws IOException, JSONException {
+		System.out.println("ts..");
+		URL urlForGetRequest_POST = new URL("https://http-hunt.thoughtworks-labs.net/challenge/output");
+		String readLine_POST = null;
+		HttpURLConnection conection_POST = (HttpURLConnection) urlForGetRequest_POST.openConnection();
+		conection_POST.setRequestMethod("POST");
+		conection_POST.setRequestProperty("userId", "yiz5wXuSC"); // set header
+		conection_POST.setRequestProperty("Content-Type", "application/json");
+		conection_POST.setDoOutput(true);
+		conection_POST.setDoInput(true);
+		conection_POST.setConnectTimeout(5000);
+		//String json = "{\"name\":\"Xiaomi Redmi 3S Prime 32GB 3GB\",\\\"price\\\":1737},{\\\"name\\\":\\\"Sennheiser CX 180 Street II In-Ear Headphone\\\",\\\"price\\\":649},{\\\"name\\\":\\\"Honor AP007 13000 mAH Power Bank Grey\\\",\\\"price\\\":869}{\\\"name\\\":\\\"Homefab India Set of 2 Royal Silky Aqua Blue Designer Curtains (HF158)\\\",\\\"price\\\":629}{\\\"name\\\":\\\"Homefab India Set of 2  Beautiful Marble Plain Black Curtains (HF342)\\\",\\\"price\\\":499}{\\\"name\\\":\\\"Set of 2 - measuring cups & measuring spoon\\\",\\\"price\\\":350}}";
+		String json = jasonstringResponse;
+		
+		BufferedReader in = new BufferedReader(new InputStreamReader(conection_POST.getInputStream()));
+		StringBuffer response = new StringBuffer();
+		while ((readLine_POST = in .readLine()) != null) {
+			response.append(readLine_POST);
+		} in .close();
+		// print result
+		System.out.println("JSON String Result " + response.toString());
+		
+/*
+		OutputStream os = conection_POST.getOutputStream();
+		os.write(json.getBytes("UTF-8"));
+		//os.close();
+
+		// read the response
+		InputStream in = new BufferedInputStream(conection_POST.getInputStream());
+		String result = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+		JSONObject jsonObject = new JSONObject(result);
+
+		/*
+		int responseCode_POST = conection_POST.getResponseCode();
+		String responsedesc_POST = conection_POST.getResponseMessage();
+		System.out.println(responseCode_POST);
+		System.out.println(responsedesc_POST); */
+		
+		/*
+		 in.close();
+		 conection_POST.disconnect();
+		 os.close();
+		 
+		 */
+		 
+		 
+	}
+
+}
