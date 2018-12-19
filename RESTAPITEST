@@ -1,0 +1,60 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class ChallengeAPI {
+
+	public static void main(String[] args) throws IOException 
+	{
+		URL urlForGetRequest = new URL("https://http-hunt.thoughtworks-labs.net/challenge/input");
+		String readLine = null;
+		HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
+		conection.setRequestMethod("GET");
+
+		conection.setRequestProperty("userId", "yiz5wXuSC"); // set header
+		conection.setRequestProperty("Content-Type", "application/json");
+		int responseCode = conection.getResponseCode();
+		if (responseCode == HttpURLConnection.HTTP_OK) {
+			BufferedReader in = new BufferedReader(new InputStreamReader(conection.getInputStream()));
+			StringBuffer response = new StringBuffer();
+			while ((readLine = in .readLine()) != null) {
+				response.append(readLine);
+			} in .close();
+			// print result
+			System.out.println("JSON String Result " + response.toString());
+			//GetAndPost.POSTRequest(response.toString());
+		} else {
+			System.out.println("GET NOT WORKED");
+		}
+		//runPOSTmethod();
+
+	}
+
+	
+	public static void runPOSTmethod() throws IOException
+	{
+		URL urlForGetRequest_POST = new URL("https://http-hunt.thoughtworks-labs.net/challenge/output");
+		String readLine_POST = null;
+		HttpURLConnection conection_POST = (HttpURLConnection) urlForGetRequest_POST.openConnection();
+		conection_POST.setRequestMethod("POST");
+		conection_POST.setRequestProperty("userId", "yiz5wXuSC"); // set header
+		conection_POST.setRequestProperty("Content-Type", "application/json");
+		conection_POST.setDoOutput(true);
+		conection_POST.setDoInput(true);
+		conection_POST.setConnectTimeout(5000);
+		
+	
+		int responseCode_POST = conection_POST.getResponseCode();
+		String responsedesc_POST = conection_POST.getResponseMessage();
+		System.out.println(responseCode_POST);
+		System.out.println(responsedesc_POST);
+		
+	}
+	
+	
+	
+	
+	}
