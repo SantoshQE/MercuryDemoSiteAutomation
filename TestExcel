@@ -1,0 +1,193 @@
+package FrameworkDriver;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+
+import org.apache.poi.ss.usermodel.Cell;
+//import java.io.FileNotFoundException;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+//import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.Reporter;
+//import org.testng.Reporter;
+import org.testng.annotations.Test;
+
+public class ReadKeywordFile {
+	public static String Data1;	
+	@Test(priority=1,description="Read data from excel")
+	public void ReadExcel() throws Exception {
+
+
+		System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.Jdk14Logger");
+		String KeywordFile = System.getProperty("user.dir");
+		KeywordFile = KeywordFile.replace("\\", "\\\\");
+		File source = new File(KeywordFile+"\\FrameworkDriverExcel\\Keywords_TestData.xlsx");
+		FileInputStream input= new FileInputStream(source);
+		XSSFWorkbook wb= new XSSFWorkbook(input);
+		XSSFSheet TestCaseSheet = wb.getSheet("TestCases");   //TestCases Sheet
+		XSSFSheet TestDataSheet = wb.getSheet("TestData");   //TestData Sheet
+		XSSFSheet GlobalConfigSheet = wb.getSheet("GlobalConfig"); //GlobalConfig Sheet
+		//System.out.println(GlobalConfigSheet.getSheetName());
+		String testdatasheet = TestDataSheet.getSheetName();
+		System.out.println(testdatasheet);
+		Reporter.log("========== Second sheetname is " +testdatasheet+"===========");
+		int TestCaseRowCnt = TestCaseSheet.getLastRowNum();  //TestCase Sheet RowCount
+		int TestDataRowCnt = TestDataSheet.getLastRowNum();  //TestData Sheet RowCount
+		//TestCaseRowCnt = TestCaseRowCnt + 1;
+		//TestDataRowCnt = TestDataRowCnt + 1;
+
+		for(int i = 1;i<=TestCaseRowCnt;i++)
+			TESTCASESHEET:
+			{ 
+			int colcnt  = TestCaseSheet.getRow(i).getLastCellNum();
+			colcnt = colcnt + 1;
+			for(int j=1;j<=colcnt;j++)
+			{
+				XSSFCell ExecuteFlag  = TestCaseSheet.getRow(i).getCell(1);
+				//Below if condition is to break the loop in case the execute flag is set to NULL/Blank in excel sheet
+				if(TestCaseSheet.getRow(i).getCell(1).toString().isEmpty()){
+					break;
+				}else{System.out.println("Execute Flag for the Test Case is  "+ExecuteFlag);
+				}
+				String CellVal = ExecuteFlag.getStringCellValue();
+				if( CellVal.equals("Y")) {
+					XSSFCell CellValTC  = TestCaseSheet.getRow(i).getCell(0);
+					String CellValTCSheet = CellValTC.getStringCellValue();
+					Reporter.log("========== The flag on the row  " +i+" is set to Y for Execution ===========");
+
+					for(int m = 1;m<=TestDataRowCnt;m++)
+					{   
+						XSSFCell TCfromTestData = TestDataSheet.getRow(m).getCell(0);
+						String CellValTD = TCfromTestData.getStringCellValue();
+						int colcntTestData  = TestDataSheet.getRow(m).getLastCellNum();
+						for(int n=1;n<=colcntTestData;n++)
+						{ 
+							if (CellValTCSheet.equals(CellValTD))
+							{
+								//Collect Test data if the test case name is matched in test data sheet
+								Data1 = TestDataSheet.getRow(m).getCell(1).toString();
+								String TestData = Data1;
+								System.out.println(TestData);
+								String KeywordString = TestCaseSheet.getRow(i).getCell(j+1).toString();
+								if (KeywordString.isEmpty()== true){
+									break TESTCASESHEET;   //Go back to test case iteration 
+								}else{
+									System.out.println(TestCaseSheet.getRow(i).getCell(j+1).toString().length()); 	
+									System.out.println(TestCaseSheet.getRow(i).getCell(j+1).toString());
+									String TCCellvalue  = TestCaseSheet.getRow(i).getCell(j+1).toString();
+									while(TCCellvalue.isEmpty() == false || TCCellvalue.equals(""))
+									{   
+										String KeywordName = TCCellvalue;
+										//CALL THE KEYWORD ONE BY ONE
+										String[] parts = KeywordName.split("\\|");
+										String strClassName = parts[0];  
+										String strMethodName = parts[1]; 	  					 		
+										//Reflection API
+										//String PkgName = this.getClass().getPackage().getName();
+										String PkgName = "Tests";
+										String KeywordNameClassName = PkgName+"."+strClassName;
+										Class<?> KeywordNameClass = Class.forName(KeywordNameClassName); 
+										Object objKeywordName = KeywordNameClass.newInstance();
+										int TotalMethods   = KeywordNameClass.getDeclaredMethods().length;
+										System.out.println("Total methods in class are : " +TotalMethods);
+										
+			//THIS LOOP IS TO FIND THE @BeforeTest ANNOTATION METHOD TO BE EXECUTED FIRST
+			for(int annot=0;annot<TotalMethods;annot++)
+			{
+				String mthname   = KeywordNameClass.getDeclaredMethods()[annot].getName();
+				Method mth1 = objKeywordName.getClass().getMethod(mthname);
+				Annotation[] annotname = mth1.getDeclaredAnnotations();
+				System.out.println(annotname);
+				System.out.println(annotname[0].annotationType().getCanonicalName());
+
+				if(annotname[0].annotationType().getSimpleName().toString().contains("BeforeTest"))  
+					//contains("BeforeTest"))
+				{
+					System.out.println(annotname.toString());
+					mth1.invoke(objKeywordName);
+					break;	
+				}
+			}                           //THIS LOOP IS TO FIND THE EXACT METHOD NAME IN THE CLASS AND EXECUTE THE @Test BLOCK  
+										for(int mn=0;mn<=TotalMethods;mn++)
+										{
+											String methodName   = KeywordNameClass.getDeclaredMethods()[mn].getName();
+											if(methodName.equals("") || methodName.equals(null) )
+											{
+												break;
+											}
+											else {
+												Method setNameMethod = objKeywordName.getClass().getMethod(methodName);
+												String keywordname = methodName.toString();
+												//	setNameMethod.getAnnotation(arg0)
+												// get the annotation for class Demo
+												/*Annotation[] annotname = setNameMethod.getDeclaredAnnotations();
+												//((Class<? extends Annotation>) KeywordNameClass);
+												System.out.println(annotname.toString()); */
+												if(strMethodName.equals(keywordname))
+												{
+													System.out.println(setNameMethod.toString());		
+													setNameMethod.invoke(objKeywordName);     // EXECUTE THE METHOD
+													break;
+												}
+											} 
+										}
+			//THIS LOOP IS TO FIND THE @AfterTest ANNOTATION METHOD TO BE EXECUTED LAST
+			for(int annot=0;annot<TotalMethods;annot++)
+			{
+				String mthname   = KeywordNameClass.getDeclaredMethods()[annot].getName();
+				Method mth1 = objKeywordName.getClass().getMethod(mthname);
+				Annotation[] annotname = mth1.getDeclaredAnnotations();
+				System.out.println(annotname);
+				System.out.println(annotname[0].annotationType().getCanonicalName());
+
+				if(annotname[0].annotationType().getSimpleName().toString().contains("AfterTest"))  
+					//contains("BeforeTest"))
+				{
+					System.out.println(annotname.toString());
+					mth1.invoke(objKeywordName);
+					break;	
+				}
+			}
+									if (TCCellvalue.isEmpty() == true  || TCCellvalue.equals(""))
+										{
+											break;
+
+										}                            
+										//j = j + 1;
+										if((TestCaseSheet.getRow(i).getCell(j+1)== null))
+										{
+											break;
+										}
+										else
+										{
+										TCCellvalue  = TestCaseSheet.getRow(i).getCell(j+1).toString();
+										}
+									}
+
+								}
+								break TESTCASESHEET;   //Go back to test case iteration 
+							}else{
+
+
+							}	 
+						}
+					}
+
+				}else {
+					Reporter.log("========== The flag on the row  " +i+" is NOT set to Y for Execution ===========");
+				}
+
+			}
+			}
+		wb.close();	  
+	}
+
+
+}
+
+
+
