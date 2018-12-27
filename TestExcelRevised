@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -112,6 +114,16 @@ public class FrameworkDriver_RunTestCases
 								//THIS LOOP IS TO FIND THE EXACT METHOD NAME IN THE CLASS AND EXECUTE THE @Test BLOCK  
 								for(int mn=0;mn<=TotalMethods;mn++)
 								{
+									//code to get parameters
+									 Parameter[] param = KeywordNameClass.getDeclaredMethods()[mn].getParameters();
+									 for(int pr=0;pr<param.length;pr++)
+									 {
+										 System.out.println("-- " + param[pr].getName() + " --");
+										 System.out.println(param[pr].getParameterizedType());
+										 
+										 
+									 }
+
 									String methodName   = KeywordNameClass.getDeclaredMethods()[mn].getName();
 									if(methodName.equals("") || methodName.equals(null) )
 									{
@@ -173,11 +185,11 @@ public class FrameworkDriver_RunTestCases
 		{
 			try
 			{
-				
 				if(TC_in_TD.toString().equalsIgnoreCase(TDSheet.getRow(td).getCell(0).toString()))
 				{
 					//System.out.println(TDSheet.getRow(td).getCell(0).toString());
 					TDIter  = TDIter + 1;
+					
 					
 					
 				}	 
