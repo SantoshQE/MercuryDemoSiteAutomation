@@ -1,0 +1,21 @@
+1. application kya tha overview : Its a webbased application named XYZ, MyGPS , including a test flow that covers 3-4 modules
+such as for ex: user creation,assigning roles,create portfolio,perform transaction using the new user credentials
+2. Technology used : Application was developed using html and embedded java objects
+3. automation approach based on POC : As the application was build using HTML , we selected selenium as the first open source choice to check application fwasdibilyt, 
+POC Conclusion :
+1. All the web objects were easily identified using selenium webdriver 
+2. We could  automate 1 end to end flow as a part of automation POC using selenium webdriver 
+
+Challenges :
+1. windows authentication popup are not easily identified using selenium webdriver so we used webdriver switch , alert and third party tools such as auto it to automate it
+2. The application contains a page wherein a PDF file is embedded in webpage and verify the contents --> This is not easy using selenium web driver so we are thinking about third party tool such as PDFBOX
+
+4. framewortk decided based on approach 
+As there is not much data driven flow we have decided to implementa keyword driven framwork using selenium 
+other choices are 
+1. TestNG
+2. TestNG-Page Object Model
+
+5. detail explaination of frameowrk with focus on reporting , integration of frameowork with test mgmt tools such as ALM 
+
+
