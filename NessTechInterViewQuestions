@@ -1,1 +1,102 @@
 
+https://www.softwaretestingo.com/ness-technologies-interview-questions/
+
+If there is Login Page, after entering credentials and submit button it will redirect to Home Page.
+ans:  
+public class Test()
+{
+     Static WebDriver driver;
+
+@BeforeTest()
+Public void runPreCondition()
+{
+    driver = new ChromeDriver();
+    String ProjectPath = System.getProperty("user.dir");
+    System.setProperty("webdriver.chrome.driver", ProjectPath + "//SeleniumDrivers//ChromeDriver.exe") ;
+}
+@Test
+Public void checklogin()
+{
+   driver.navigate.to("https://www.google.com");
+   
+    
+
+}
+
+
+}
+
+===========================================
+If there is a specific element int webpage which loading don’t have a fixed time, how will you handle this?
+Ans : Will make use of explicit wait
+WebDriverWait W = new WebDriverWait(driver,10);
+W.until(ExpectedConditions.elementtobeclickable(by.id())) 
+===========================================
+What is the difference between Navigate.To() and driver.get()?
+Ans : driver.get --> will wait till all the DOM is loaded 
+      driver.navigate.to() --> will not wait for all the DOM to be loaded, it also provides further methods such as forword,back etc
+===========================================
+What are the methods in action class.?
+Ans : contextClick, doubleClick,keyDown,keyUp,mousemove,build,perform,drangAnddropBy,clickAndhold
+===========================================
+Code for Slide-bar and slide action using Webdriver
+Ans : 
+driver.get("http://jqueryui.com/slider/");
+
+        WebDriver driver = new InternetExplorerDriver();
+        driver.get("http://jqueryui.com/slider/");
+        driver.switchTo().frame(0); //need to switch to this frame before clicking the slider
+        WebElement slider = driver.findElement(By.xpath("//div[@id='slider']/span"));
+        Actions move = new Actions(driver);
+        Action action = (Action) move.dragAndDropBy(slider, 30, 0).build();
+        action.perform();
+   }
+
+=================================================================================================
+What is the difference between ImplicitWait and ExplicitWait()?
+Ans : 
+Implicit Wait --> will hold the driver execution till a specific time , post it gives timeoutexeception.
+An implicit wait makes WebDriver poll the DOM for a certain amount of time when trying to locate an element.
+Explicit Wait --> Its a conditional wait based on a predefined  time and based on object state specified using expectedconditions
+WebDriverWait W = new WebDriverWait(driver,10);
+W.until(ExpectedConditions.elementTobeClickable(By.id()));
+=================================================================================================
+What is the significance of testng.xml?
+Ans:
+testng.xml file is a configuration file in TestNG. It is used to define test suites and tests. It is also used to pass Parameters to the test methods. It provides different options to include packages, classes and independent test methods in our test suite.
+=================================================================================================
+How Listeners are defined in TestNG.xml?
+Ans: 
+Listener is defined as interface that modifes the default TestNG's behavior. As the name suggests Listeners "listen" to the event defined in the selenium script and behave accordingly. It is used in selenium by implementing Listeners Interface. It allows customizing TestNG reports or logs
+Below are the few TestNG listeners:
+
+IAnnotationTransformer ,
+IAnnotationTransformer2 ,
+IConfigurable ,
+IConfigurationListener ,
+IExecutionListener,
+IHookable ,
+IInvokedMethodListener ,
+IInvokedMethodListener2 ,
+IMethodInterceptor ,
+IReporter,
+ISuiteListener,
+ITestListener .
+=================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
