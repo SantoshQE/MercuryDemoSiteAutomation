@@ -83,12 +83,39 @@ IReporter,
 ISuiteListener,
 ITestListener .
 =================================================================================================
-
-
-
-
-
-
+Which are the Methods included in ExplicitWait?
+Ans:
+expectedconditions.visibilityofElementLocated(By.id)
+expectedconditions.elementTobeselected(By.id)
+expectedconditions.elementTobeclickable(By.id)
+=================================================================================================
+What are the challenges in Selenium?
+Ans:
+Pop-up Windows. ...
+Dynamic Content. ...
+Flakiness. ...
+Mobile Testing. ...
+Limited Reporting. ...
+Multi-tab Testing. ...
+Manual Testing. ...
+=================================================================================================
+What is code for using right-click?
+Ans:
+Actions action = new Actions(driver).contextClick(element);
+action.build().perform();
+=================================================================================================
+Write a code enter credentials and submit in which are in the second frame, switch back to Main WebPage.
+Ans:
+=================================================================================================
+What is an interface?
+Ans : 
+Interface is a special class in java which holds abstract methods, a class can implement many interfaces thus allowing multiple inheritance.
+An interface is just like Java Class, but it only has static constants and abstract method. Java uses Interface to implement multiple inheritance. A Java class can implement multiple Java Interfaces. All methods in an interface are implicitly public and abstract
+Every class must override the methods declared in an interface
+=================================================================================================
+What is an abstraction?
+Ans : 
+Abstraction is the process in Java which is used to hide certain details and only show the essential features of the object. In other words, it deals with the outside view of an object (interface).
 
 
 
